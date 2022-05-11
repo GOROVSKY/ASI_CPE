@@ -13,48 +13,52 @@
         <link rel="stylesheet" type="text/css" href="css/custom.css">
     </head>
     <body>
+        <div style="display: flex;align-items: center;height: 100%;">
         <form id="subscribe" method="post">
-            <div style="display: flex;flex-direction: column;flex-wrap: wrap;align-items: center;margin-top: 10em;">
-                <div style="display: flex;">
-                    <div class="field">
-                        <label>Name:</label>
+            <fieldset>
+                <legend>UserForm</legend>
+                <div style="display: flex;flex-direction: column;flex-wrap: wrap;align-items: end;">
+                    <div style="display: flex;">
+                        <div class="field">
+                            <label>Name:</label>
+                        </div>
+                        <div class="field">
+                            <input type="text" name="name">
+                        </div>
                     </div>
-                    <div class="field">
-                        <input type="text" name="name">
+                    <!-- Card -->
+                    <div style="display: flex;">
+                        <div class="field">
+                            <label>Surname:</label>
+                        </div>
+                        <div class="field">
+                            <input type="text"  name="surname">
+                        </div>
                     </div>
+    
+                    <div style="display: flex;">
+                        <div class="field">
+                            <label>Password:</label>
+                        </div>
+                        <div class="field">
+                            <input type="text"  name="password">
+                        </div>
+                    </div>
+    
+                    <div style="display: flex;">
+                        <div class="field">
+                            <label>Re-Password:</label>
+                        </div>
+                        <div class="field">
+                            <input type="password" name="re_password">
+                        </div>
+                    </div>
+    
+                    <input type="submit" style="font-size: 2em;margin-top: 1em;width: 100%;" value="OK"></input>
                 </div>
-                <!-- Card -->
-                <div style="display: flex;">
-                    <div class="field">
-                        <label>Surname:</label>
-                    </div>
-                    <div class="field">
-                        <input type="text"  name="surname">
-                    </div>
-                </div>
-
-                <div style="display: flex;">
-                    <div class="field">
-                        <label>Password:</label>
-                    </div>
-                    <div class="field">
-                        <input type="text"  name="password">
-                    </div>
-                </div>
-
-                <div style="display: flex;">
-                    <div class="field">
-                        <label>Re-Password:</label>
-                    </div>
-                    <div class="field">
-                        <input type="password" name="re_password">
-                    </div>
-                </div>
-
-                <input type="submit" style="font-size: 2em;margin-top: 1em;" value="OK"></input>
-            </div>
+            </fieldset>
         </form>
-
+    </div>
 </body>
 
     <script src="js/insertCard.js"></script> 

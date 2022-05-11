@@ -36,3 +36,9 @@ td, th {
 .two {
     flex-basis: 20%;
 }
+
+#subscribe{
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+}
