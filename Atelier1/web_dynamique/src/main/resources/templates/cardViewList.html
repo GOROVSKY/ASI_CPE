@@ -10,16 +10,25 @@
   		<h1> THIS IS A DEFAULT HEADER</h1>
   	</div>
   	<ul>
-  		<li th:each="poney : ${poneyList}">
+  		<li th:each="myCard : ${cardList}">
   			<div>
-  				<img th:src="${poney.imgUrl}" alt="">
-  				<h3 th:utext="${poney.name}">...</h3>
-  				<div th:style="'background-color:'+${poney.color}">
-  					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-  						do eiusmod tempor incididunt.</p>
-  				</div>
-  				<h5 th:text="'Color:  '+${poney.color}">...</h5>
-  				<h5 th:text="'SuperPower:  '+${poney.superPower}">...</h5>
+  			
+  			
+    		<img th:src="${myCard.imgUrl}" alt="">
+
+    		<h3 th:utext="${myCard.name}">...</h3>
+
+    		<div >
+    			<p th:utext="${myCard.description}">
+    				...
+    			</p>	
+    		</div>
+
+    		<h5 th:text="'Attack:  '+${myCard.attack}">...</h5>
+    		<h5 th:text="'Defense:  '+${myCard.defense}">...</h5>
+    		<h5 th:text="'HP:  '+${myCard.hp}">...</h5>
+    		<h5 th:text="'Price:  '+${myCard.price}">...</h5>
+    		
   			</div>
   		<li>
   	</ul>

@@ -1,10 +1,16 @@
 package com.sp.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.sp.model.Card;
 
@@ -12,19 +18,27 @@ import com.sp.model.Card;
 public class CardDao {
 	private List<Card> myCardList;
 	private Random randomGenerator;
+	private final RestTemplate restTemplate;
+	private String url = "https://asi2-backend-market.herokuapp.com/cards";
 
-	public CardDao() {
+	public CardDao(RestTemplateBuilder restTemplateBuilder) {
 		myCardList=new ArrayList<>();
 		randomGenerator = new Random();
+		this.restTemplate = restTemplateBuilder.build();
 		createCardList();
 	}
 
 	private void createCardList() {
-		Card c1 = new Card("Card 1", "test", "family1", "affinity1", "http://medias.3dvf.com/news/sitegrab/gits2045.jpg", "http://medias.3dvf.com/news/sitegrab/gits2045.jpg",
-				10, 20, 30, 40, 100);
-
-		myCardList.add(c1);
+		Card[] cards = this.getCardsAsObject();
+		for(Card card : cards) {
+			myCardList.add(card);
+		}
 	}
+	
+	private Card[] getCardsAsObject() {
+	    return this.restTemplate.getForObject(url, Card[].class);
+	}
+	
 	
 	public List<Card> getCardList() {
 		return this.myCardList;
@@ -47,10 +61,25 @@ public class CardDao {
 	public Card addCard(String name, String description, String family, String affinity, String imgUrl, String smallImgUrl,
 			float attack, float defense, float hp, float price, int energy) {
 		
-		Card c = new Card(name, description, family, affinity,  imgUrl, smallImgUrl,
+
+	    // create headers
+	    HttpHeaders headers = new HttpHeaders();
+	    
+	    // set `content-type` header
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    
+	    // set `accept` header
+	    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+	    // create a post object
+	    Card c = new Card(name, description, family, affinity,  imgUrl, smallImgUrl,
 				attack, defense, hp, price, energy);
-		this.myCardList.add(c);
-		return c;
+
+	    // build the request
+	    HttpEntity<Card> entity = new HttpEntity<>(c, headers);
+
+	    // send POST request
+	    return restTemplate.postForObject(url, entity, Card.class);
 	}
 }
 
