@@ -1,0 +1,38 @@
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid black;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.image {
+    width: 200px;
+}
+
+.button {
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(74, 74, 173);
+    color: white;
+    padding: 10px; 
+    cursor: pointer;
+}
+
+.grid {
+    display: flex;
+}
+
+.ten {
+    flex-basis: 80%;
+}
+
+.two {
+    flex-basis: 20%;
+}
