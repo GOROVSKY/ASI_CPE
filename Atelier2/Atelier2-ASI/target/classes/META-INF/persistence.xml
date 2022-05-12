@@ -7,5 +7,6 @@
 	<persistence-unit name="Atelier2-ASI">
 	
 	</persistence-unit>
-	<persistence-unit name="mypersistenceunit" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="mypersistenceunit" transaction-type="RESOURCE_LOCAL"></persistence-unit>
+</persistence>
 
