@@ -1,5 +1,7 @@
 package com.sp.controller;
 
+import com.sp.model.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -80,6 +82,24 @@ public class CardDao {
 
 	    // send POST request
 	    return restTemplate.postForObject(url, entity, Card.class);
+	}
+	
+	
+	public void addCard(CardFormDTO cardForm) {
+	    // create headers
+	    HttpHeaders headers = new HttpHeaders();
+	    
+	    // set `content-type` header
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    
+	    // set `accept` header
+	    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+	    
+	    // build the request
+	    HttpEntity<CardFormDTO> entity = new HttpEntity<>(cardForm, headers);
+
+	    // send POST request
+	    restTemplate.postForObject(url, entity, CardFormDTO.class);
 	}
 }
 
