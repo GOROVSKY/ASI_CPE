@@ -63,43 +63,13 @@ public class CardDao {
 	public Card addCard(String name, String description, String family, String affinity, String imgUrl, String smallImgUrl,
 			float attack, float defense, float hp, float price, int energy) {
 		
-
-	    // create headers
-	    HttpHeaders headers = new HttpHeaders();
-	    
-	    // set `content-type` header
-	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    
-	    // set `accept` header
-	    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
 	    // create a post object
 	    Card c = new Card(name, description, family, affinity,  imgUrl, smallImgUrl,
 				attack, defense, hp, price, energy);
-
-	    // build the request
-	    HttpEntity<Card> entity = new HttpEntity<>(c, headers);
-
-	    // send POST request
-	    return restTemplate.postForObject(url, entity, Card.class);
-	}
-	
-	
-	public void addCard(CardFormDTO cardForm) {
-	    // create headers
-	    HttpHeaders headers = new HttpHeaders();
 	    
-	    // set `content-type` header
-	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    this.myCardList.add(c);
 	    
-	    // set `accept` header
-	    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-	    
-	    // build the request
-	    HttpEntity<CardFormDTO> entity = new HttpEntity<>(cardForm, headers);
-
-	    // send POST request
-	    restTemplate.postForObject(url, entity, CardFormDTO.class);
+	    return c;
 	}
 }
 
