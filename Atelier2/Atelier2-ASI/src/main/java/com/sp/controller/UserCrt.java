@@ -6,9 +6,9 @@ import java.util.List;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
-import com.sp.dao.UsersService;
 import com.sp.dto.UsersDTO;
 import com.sp.entity.Users;
+import com.sp.service.UsersService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
