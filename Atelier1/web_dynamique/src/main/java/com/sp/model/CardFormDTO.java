@@ -1,5 +1,6 @@
 package com.sp.model;
 
+
 public class CardFormDTO {
 	
 	private String name;

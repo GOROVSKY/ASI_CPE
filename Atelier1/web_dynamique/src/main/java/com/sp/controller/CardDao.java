@@ -1,5 +1,7 @@
 package com.sp.controller;
 
+import com.sp.model.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -61,25 +63,13 @@ public class CardDao {
 	public Card addCard(String name, String description, String family, String affinity, String imgUrl, String smallImgUrl,
 			float attack, float defense, float hp, float price, int energy) {
 		
-
-	    // create headers
-	    HttpHeaders headers = new HttpHeaders();
-	    
-	    // set `content-type` header
-	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    
-	    // set `accept` header
-	    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
 	    // create a post object
 	    Card c = new Card(name, description, family, affinity,  imgUrl, smallImgUrl,
 				attack, defense, hp, price, energy);
-
-	    // build the request
-	    HttpEntity<Card> entity = new HttpEntity<>(c, headers);
-
-	    // send POST request
-	    return restTemplate.postForObject(url, entity, Card.class);
+	    
+	    this.myCardList.add(c);
+	    
+	    return c;
 	}
 }
 
