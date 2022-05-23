@@ -1,16 +1,14 @@
   package com.sp.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
   
-  @RestController
+  @Controller
   public class RequestCrt {
 	  
-
-  
   	@Value("${welcome.message}")
   	private String message;
   
@@ -23,6 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
   		model.addAttribute("messageLocal", messageLocal);
   
   		return "index";
+  	}
+  	
+  	
+  	@RequestMapping(value = { "/addUser" }, method = RequestMethod.GET)
+  	public String addUser(Model model) {
+ 
+  		return "addUser";
+  	}
+  	
+  	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+  	public String login(Model model) {
+ 
+  		return "login";
   	}
   	
   	@RequestMapping(value = { "/view"}, method = RequestMethod.GET)
