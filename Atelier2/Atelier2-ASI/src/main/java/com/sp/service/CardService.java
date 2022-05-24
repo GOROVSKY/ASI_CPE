@@ -2,24 +2,32 @@ package com.sp.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sp.entity.Card;
+import com.sp.entity.Users;
+import com.sp.model.CardRepository;
 
 @Service
 public class CardService {
-	
+		
+	@Autowired
+	CardRepository cardRepository ;
 
 	public int addCard(Card card) {
-		//TODO
-		int id = 0;
-		return id;
+		cardRepository.save(card);
+		return 1;
 	}
 	
-	public List<Card> getCards(int id) {
-		List<Card> cards = new ArrayList<Card>();
-		return cards;
+	public List<Card> getCards() {
+		List<Card> result = 
+				  StreamSupport.stream(cardRepository.findAll().spliterator(), false)
+				    .collect(Collectors.toList());
+		return result;
 	}
 
 	public void updateCard(Card card) {
@@ -27,6 +35,6 @@ public class CardService {
 	}
 	
 	public void deleteCard(Card card) {
-		//TODO
+		cardRepository.delete(card);
 	}
 }

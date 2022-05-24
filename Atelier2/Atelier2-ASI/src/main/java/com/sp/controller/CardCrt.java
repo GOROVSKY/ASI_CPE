@@ -1,6 +1,7 @@
 package com.sp.controller;
 
-import com.sp.entity.*;
+
+import com.sp.entity.Card;
 import com.sp.service.CardService;
 
 import java.util.List;
@@ -19,8 +20,7 @@ public class CardCrt {
 
 	@RequestMapping(value = { "/cards" }, method = RequestMethod.GET)
 	public List<Card> getCard(Model model) {
-		int id = 0;
-		List<Card> list = cardService.getCards(id);
+		List<Card> list = cardService.getCards();
 		return list;
 	}
 

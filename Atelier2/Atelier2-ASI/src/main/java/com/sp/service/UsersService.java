@@ -35,6 +35,10 @@ public class UsersService {
 		return u;
 	}
 	
+	public void deleteUser(Users u) {
+		userRepository.delete(u);
+	}
+	
 	public Users findUsersById(Integer id) {
 		return userRepository.findById(id);
 	}

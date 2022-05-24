@@ -36,6 +36,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
   		return "login";
   	}
   	
+  	@RequestMapping(value = { "/menu" }, method = RequestMethod.GET)
+  	public String menu(Model model) {
+ 
+  		return "menu";
+  	}
+  	
+  	@RequestMapping(value = { "/cardBuy" }, method = RequestMethod.GET)
+  	public String cardBuy(Model model) {
+ 
+  		return "cardListBUY";
+  	}
+  	
+  	@RequestMapping(value = { "/cardSell" }, method = RequestMethod.GET)
+  	public String cardSell(Model model) {
+ 
+  		return "cardListSELL";
+  	}
+  	
   	@RequestMapping(value = { "/view"}, method = RequestMethod.GET)
     public String view(Model model) {
       	return "poneyView";

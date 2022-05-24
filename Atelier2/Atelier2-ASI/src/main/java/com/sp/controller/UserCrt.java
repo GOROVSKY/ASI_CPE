@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
     }
 
   @RequestMapping(value = { "/users"}, method = RequestMethod.POST)
-    public String adduser(@RequestBody Users user ) {
+    public String addUser(@RequestBody Users user ) {
 	  	
 	    usersService.addUser(user);
 	  	return user.toString();
@@ -44,6 +44,12 @@ import org.springframework.web.bind.annotation.RestController;
   public Users getUsersById(@PathVariable @NotNull @DecimalMin("0") Integer userId ) {
 	    Users u = usersService.findUsersById(userId);
 	  	return u;
+	}
+  
+  @RequestMapping(value = { "/users/"}, method = RequestMethod.DELETE)
+  public Users deleteUser(Users user ) {
+	    usersService.deleteUser(user);
+	  	return user;
 	}
 
   	
