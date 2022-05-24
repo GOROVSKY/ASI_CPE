@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.RestController;
 	}
   
   @RequestMapping(value = { "/users/"}, method = RequestMethod.DELETE)
-  public Users deleteUser(Users user ) {
+  public Users deleteUser(@RequestBody Users user ) {
 	    usersService.deleteUser(user);
 	  	return user;
 	}

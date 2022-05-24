@@ -18,9 +18,8 @@ public class CardService {
 	@Autowired
 	CardRepository cardRepository ;
 
-	public int addCard(Card card) {
+	public void addCard(Card card) {
 		cardRepository.save(card);
-		return 1;
 	}
 	
 	public List<Card> getCards() {
@@ -29,9 +28,14 @@ public class CardService {
 				    .collect(Collectors.toList());
 		return result;
 	}
+	
+	public Card findCardById(Integer id) {
+		return cardRepository.findById(id);
+	}
 
 	public void updateCard(Card card) {
-		//TODO
+		Card cardDB = cardRepository.findById(card.getId());
+		cardRepository.save(cardDB);
 	}
 	
 	public void deleteCard(Card card) {
