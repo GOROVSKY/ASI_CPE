@@ -1,8 +1,12 @@
 package com.sp.controller;
 
+import com.sp.dto.CardDTO;
+import com.sp.dto.UsersDTO;
 import com.sp.entity.Card;
+import com.sp.entity.Users;
 import com.sp.service.CardService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.DecimalMin;
@@ -22,15 +26,23 @@ public class CardCrt {
 	CardService cardService;
 
 	@RequestMapping(value = { "/cards" }, method = RequestMethod.GET)
-	public List<Card> getCard() {
-		List<Card> list = cardService.getCards();
-		return list;
+	public List<CardDTO> getCard() {
+		
+		List<CardDTO> dtoList = new ArrayList<CardDTO>();
+		for (Card card : cardService.getCards()) {
+			dtoList.add(new CardDTO(card.getId(), card.getName(), card.getDescription(), card.getFamily(), card.getAffinity(), card.getAttack(),
+					card.getDefense(), card.getHp(), card.getEnergy(), card.getPrice(), card.getImageUrl()));
+		}
+		
+		return dtoList;
 	}
 
 	@RequestMapping(value = { "/cards/{cardId}" }, method = RequestMethod.GET)
-	public Card getCardById(@PathVariable @NotNull @DecimalMin("0") Integer cardId) {
-		Card u = cardService.findCardById(cardId);
-		return u;
+	public CardDTO getCardById(@PathVariable @NotNull @DecimalMin("0") Integer cardId) {
+		Card card = cardService.findCardById(cardId);
+		CardDTO dto = new CardDTO(card.getId(), card.getName(), card.getDescription(), card.getFamily(), card.getAffinity(), card.getAttack(),
+				card.getDefense(), card.getHp(), card.getEnergy(), card.getPrice(), card.getImageUrl());
+		return dto;
 	}
 
 	@RequestMapping(value = { "/cards" }, method = RequestMethod.POST)
