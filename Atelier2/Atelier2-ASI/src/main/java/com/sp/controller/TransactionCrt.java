@@ -24,24 +24,31 @@ public class TransactionCrt {
 	@Autowired
 	TransactionService transactionService;
 
-	@RequestMapping(value = { "/transaction" }, method = RequestMethod.GET)
-	public List<TransactionDTO> transaction() {
-		List<TransactionDTO> dtoList = new ArrayList<TransactionDTO>();
-		for (Transaction transaction : transactionService.getTransaction()) {
-			dtoList.add(
-					new TransactionDTO(transaction.getCardId(), transaction.getBuyerId(), transaction.getSellerId()));
-		}
-		return dtoList;
+	
+  	@RequestMapping(value = { "/transactions"}, method = RequestMethod.GET)
+    public List<TransactionDTO> transaction() {
+  		List<TransactionDTO> dtoList = new ArrayList<TransactionDTO>();
+  		for(Transaction transaction :transactionService.getTransaction() ) {
+  			dtoList.add(new TransactionDTO(transaction.getCardId(),  transaction.getBuyerId(), transaction.getSellerId()  ));
+  		}
+  		return dtoList;
+    	 
+    }
 
+  @RequestMapping(value = { "/transactions"}, method = RequestMethod.POST)
+    public String addTransaction(@RequestBody Transaction transaction ) {
+	  	
+	  transactionService.addTransaction(transaction);
+	  return transaction.toString();
+  	}
+  
+  @RequestMapping(value = { "/transactions"}, method = RequestMethod.PUT)
+  public String updateTransaction(@RequestBody Transaction transaction ) {
+	  	
+	  transactionService.updateTransaction(transaction);
+	  return transaction.toString();
 	}
-
-	@RequestMapping(value = { "/transaction" }, method = RequestMethod.POST)
-	public String addTransaction(@RequestBody Transaction transaction) {
-
-		transactionService.addTransaction(transaction);
-		return transaction.toString();
-	}
-
+  
 	@RequestMapping(value = { "/transaction/{transactionId}" }, method = RequestMethod.GET)
 	public Transaction getTransactionById(@PathVariable @NotNull @DecimalMin("0") Integer transactionId) {
 		Transaction u = transactionService.findTransactionById(transactionId);
