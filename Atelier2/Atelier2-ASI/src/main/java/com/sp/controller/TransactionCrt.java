@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
   	@RequestMapping(value = { "/transaction"}, method = RequestMethod.GET)
     public List<TransactionDTO> transaction() {
   		List<TransactionDTO> dtoList = new ArrayList<TransactionDTO>();
-  		for(Transaction transaction :transactionService.getTransaction(0) ) {
+  		for(Transaction transaction :transactionService.getTransaction() ) {
   			dtoList.add(new TransactionDTO(transaction.getCardId(),  transaction.getBuyerId(), transaction.getSellerId()  ));
   		}
   		return dtoList;
@@ -35,16 +35,16 @@ import org.springframework.web.bind.annotation.RestController;
     }
 
   @RequestMapping(value = { "/transaction"}, method = RequestMethod.POST)
-    public String adduser(@RequestBody Transaction transaction ) {
+    public String addTransaction(@RequestBody Transaction transaction ) {
 	  	
 	  transactionService.addTransaction(transaction);
-	  	return transaction.toString();
+	  return transaction.toString();
   	}
   
   @RequestMapping(value = { "/transaction/{transactionId}"}, method = RequestMethod.GET)
-  public Transaction getUsersById(@PathVariable @NotNull @DecimalMin("0") Integer transactionId ) {
-	  Transaction u = transactionService.findTransactionById(id)(transactionId);
-	  	return u;
+  public Transaction getTransactionById(@PathVariable @NotNull @DecimalMin("0") Integer transactionId ) {
+	  Transaction u = transactionService.findTransactionById(transactionId);
+	  return u;
 	}
 
   	
