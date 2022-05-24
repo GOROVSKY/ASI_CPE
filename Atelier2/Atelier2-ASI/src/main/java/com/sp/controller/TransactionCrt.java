@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RestController;
   
   @RequestMapping(value = { "/transaction/{transactionId}"}, method = RequestMethod.GET)
   public Transaction getUsersById(@PathVariable @NotNull @DecimalMin("0") Integer transactionId ) {
-	  Transaction u = transactionService.findUsersById(transactionId);
+	  Transaction u = transactionService.findTransactionById(id)(transactionId);
 	  	return u;
 	}
 
