@@ -36,16 +36,16 @@ public class TransactionCrt {
 	}
 
 	@RequestMapping(value = { "/transaction" }, method = RequestMethod.POST)
-	public String adduser(@RequestBody Transaction transaction) {
+	public String addTransaction(@RequestBody Transaction transaction) {
 
 		transactionService.addTransaction(transaction);
 		return transaction.toString();
 	}
 
-	@RequestMapping(value = { "/transaction/{transactionId}"}, method = RequestMethod.GET)
-	public Transaction getUsersById(@PathVariable @NotNull @DecimalMin("0") Integer transactionId ) {
+	@RequestMapping(value = { "/transaction/{transactionId}" }, method = RequestMethod.GET)
+	public Transaction getTransactionById(@PathVariable @NotNull @DecimalMin("0") Integer transactionId) {
 		Transaction u = transactionService.findTransactionById(transactionId);
-	  	return u;
+		return u;
 	}
 
 }
