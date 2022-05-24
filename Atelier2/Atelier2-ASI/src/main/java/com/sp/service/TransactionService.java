@@ -15,10 +15,10 @@ import com.sp.model.TransactionRepository;
 public class TransactionService {
 	
 	@Autowired
-	public int addTransaction(Transaction transaction) {
-		//TODO
-		int id = 0;
-		return id;
+	TransactionRepository transactionRepository;
+	
+	public void addTransaction(Transaction transaction) {
+		transactionRepository.save(transaction);
 	}
 	
 	public List<Transaction> getTransaction() {
@@ -31,9 +31,9 @@ public class TransactionService {
 	}
 	
 	public void deleteTransaction(Transaction transaction) {
-		//TODO
+		transactionRepository.delete(transaction);
 	}
 	public Transaction findTransactionById(Integer id) {
-		return TransactionRepository.findById(id);
+		return transactionRepository.findById(id);
 	}
 }

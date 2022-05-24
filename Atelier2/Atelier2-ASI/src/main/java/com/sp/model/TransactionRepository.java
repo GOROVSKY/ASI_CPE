@@ -10,10 +10,8 @@ import org.springframework.data.repository.CrudRepository;
 // No need Annotation here.
 public interface TransactionRepository extends CrudRepository<Transaction, Long> { // Long: Type of Employee ID.
 
-	 Transaction findById(int id);
-	
-
-    List<Transaction> findBycardIdLike(String cardId);
-    List<Transaction> findBysellerIdLike(String sellerId);
+	Transaction findById(int id);
+    List<Transaction> findByCardIdLike(String cardId);
+    List<Transaction> findBySellerIdLike(String sellerId);
 
 }

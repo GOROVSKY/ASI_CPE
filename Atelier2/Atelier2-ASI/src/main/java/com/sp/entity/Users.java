@@ -17,6 +17,7 @@ public class Users implements java.io.Serializable {
 	private String name;
 	private String surname;
 	private String password;
+	private int wallet;
 
 	public Users() {
 	}
@@ -29,6 +30,7 @@ public class Users implements java.io.Serializable {
 		this.name = name;
 		this.surname = surname;
 		this.password = password;
+		this.wallet=5000;
 	}
 
 	@Column(name = "id", unique = true, nullable = false)
@@ -47,6 +49,15 @@ public class Users implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@Column(name = "wallet")
+	public int getWallet() {
+		return this.wallet;
+	}
+
+	public void setWallet(int wallet) {
+		this.wallet = wallet;
 	}
 
 	@Column(name = "surname")
