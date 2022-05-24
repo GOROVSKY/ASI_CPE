@@ -7,8 +7,9 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 import com.sp.dto.TransactionDTO;
-
+import com.sp.entity.Card;
 import com.sp.entity.Transaction;
+import com.sp.entity.UserCard;
 import com.sp.service.TransactionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,11 @@ public class TransactionCrt {
 	public Transaction getTransactionById(@PathVariable @NotNull @DecimalMin("0") Integer transactionId) {
 		Transaction u = transactionService.findTransactionById(transactionId);
 		return u;
+	}
+	
+	@RequestMapping(value = { "/inventory/{userId}" }, method = RequestMethod.GET)
+	public List<UserCard> getInventoryByUserId(@PathVariable @NotNull @DecimalMin("0") Integer userId) {
+		return transactionService.getInventory(userId);
 	}
 
 }

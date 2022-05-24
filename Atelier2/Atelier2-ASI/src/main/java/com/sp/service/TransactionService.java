@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.sp.entity.Card;
 import com.sp.entity.Transaction;
+import com.sp.entity.UserCard;
 import com.sp.model.TransactionRepository;
+import com.sp.model.UserCardRepository;
 
 
 @Service
@@ -18,6 +20,10 @@ public class TransactionService {
 	
 	@Autowired
 	TransactionRepository transactionRepository;
+	
+	@Autowired
+	UserCardRepository userCardRepository;
+	
 	
 	public void addTransaction(Transaction transaction) {
 		transactionRepository.save(transaction);
@@ -42,5 +48,10 @@ public class TransactionService {
 	}
 	public Transaction findTransactionById(Integer id) {
 		return transactionRepository.findById(id);
+	}
+	
+	public List<UserCard> getInventory(Integer userId){
+		return userCardRepository.findByIdUserId(userId);
+		
 	}
 }
