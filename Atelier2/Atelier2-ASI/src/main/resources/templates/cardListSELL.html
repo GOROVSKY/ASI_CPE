@@ -55,6 +55,7 @@
                         <th>Defence</th>
                         <th>Attack</th>
                         <th>Price</th>
+                        <th>Quantity</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -71,8 +72,9 @@
                             <td>{{defense}}</td>
                             <td>{{attack}}</td>
                             <td>{{price}}$</td>
+                            <td>{{quantity}}</td>
                             <td>
-                                <div class="ui vertical animated button" tabindex="0">
+                                <div class="ui vertical animated button btn-sell" tabindex="0" data-id="{{id}}" onclick="sell(this)">
                                     <div class="hidden content">Sell</div>
                                     <div class="visible content">
                                         <i class="shop icon"></i>
@@ -156,9 +158,9 @@
 
 
         <script src="lib/Semantic-UI-CSS-master/semantic.js"></script>
-        <script src="lib/jquery-3.3.1.min.js"></script> 
-        <script src="js/cardListSell.js"></script> 
-        
-    </body>
+        <script src="lib/jquery-3.3.1.min.js"></script>
+        <script src="js/cardListSell.js"></script>
+
+</body>
 
 </html>
