@@ -13,14 +13,13 @@
         <link rel="stylesheet" type="text/css" href="css/custom.css">
 
     </head>
-
     <body>
         
-        <form action="oui" method="post" style="text-align: center;">
+        <form id="subscribe" style="text-align: center;">
             <h1 style="text-align: left">Login</h1>
             <div class="container">
               <label for="surname"><b>Username</b></label>
-              <input type="text" placeholder="Surname" name="surname" required>
+              <input type="text" placeholder="Surname" name="name" required>
                 <br>
                 <br>
               <label for="pwd"><b>Password</b></label>
@@ -38,5 +37,10 @@
               <button type="button" class="cancelbtn">Cancel</button>
             </div>
           </form>
+          
     </body>
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    
+    <script src="js/loginUser.js"></script>
+ 	
 </html>

@@ -52,15 +52,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
   	public String cardSell(Model model) {
  
   		return "cardListSELL";
-  	}
-  	
-  	@RequestMapping(value = { "/view"}, method = RequestMethod.GET)
-    public String view(Model model) {
-      	return "poneyView";
-  	}
-  	
-
-
-  	
+  	} 	
   }
 
