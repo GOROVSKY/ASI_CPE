@@ -16,6 +16,7 @@ function getCookie(cname) {
 
 
 let token = getCookie('token').substring(7);
+
 $.ajax({
 	url: "http://localhost:8080/token/"+token,
 	contentType: "application/json",
@@ -25,3 +26,5 @@ $.ajax({
 				document.getElementById("wallet").textContent=user['wallet'];
 	}
 })
+
+
