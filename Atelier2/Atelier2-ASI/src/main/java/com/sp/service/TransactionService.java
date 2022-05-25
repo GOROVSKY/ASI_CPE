@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.sp.entity.Card;
 import com.sp.entity.Transaction;
 import com.sp.entity.UserCard;
+import com.sp.entity.UserCardId;
 import com.sp.model.TransactionRepository;
 import com.sp.model.UserCardRepository;
 
@@ -26,7 +27,13 @@ public class TransactionService {
 	
 	
 	public void addTransaction(Transaction transaction) {
-		transactionRepository.save(transaction);
+		UserCard u = userCardRepository.findByIdCardIdAndIdUserId(transaction.getCardId(),transaction.getSellerId());
+		if(u.getQuantity()>0)
+		{
+			u.setQuantity(u.getQuantity()-1);
+			userCardRepository.save(u);
+			transactionRepository.save(transaction);
+		}
 	}
 	
 	public List<Transaction> getTransaction() {
@@ -40,6 +47,15 @@ public class TransactionService {
 		Transaction t = transactionRepository.findById(transaction.getId());
 		t.setBuyerId(transaction.getBuyerId());
 		t.setDateBuy(transaction.getDateBuy());
+		UserCard u = userCardRepository.findByIdCardIdAndIdUserId(t.getCardId(),t.getBuyerId());
+		if(u == null)
+		{
+			u = new UserCard(new UserCardId(t.getBuyerId(),t.getCardId()),1);
+		}
+		else {
+			u.setQuantity(u.getQuantity()+1);
+		}
+		userCardRepository.save(u);
 		transactionRepository.save(t);
 	}
 	
@@ -52,6 +68,5 @@ public class TransactionService {
 	
 	public List<UserCard> getInventory(Integer userId){
 		return userCardRepository.findByIdUserId(userId);
-		
 	}
 }

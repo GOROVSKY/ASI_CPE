@@ -15,6 +15,10 @@ public interface UserCardRepository extends CrudRepository<UserCard, UserCardId>
 
 	UserCard findById(int UserCardId);
 	
+	UserCard findByIdCardIdAndIdUserId(int UserId,int CardId);
+
+	
+	
 	List<UserCard> findByIdUserId(int userId);
 
 	
