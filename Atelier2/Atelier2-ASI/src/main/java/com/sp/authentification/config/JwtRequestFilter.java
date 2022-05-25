@@ -34,7 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		String requestTokenHeader = request.getHeader("Cookie").split(";")[0].split("=")[1];
 		for(String cookie : request.getHeader("Cookie").split(";") ) {
-			if(cookie.split("=")[0] == "token" ) {
+			if(cookie.split("=")[0].contains("token") ) {
 				requestTokenHeader=cookie.split("=")[1];
 			}
 		}
