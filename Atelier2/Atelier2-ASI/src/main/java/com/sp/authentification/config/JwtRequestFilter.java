@@ -32,7 +32,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
-		final String requestTokenHeader = request.getHeader("Cookie").split(";")[0].split("=")[1];
+		String requestTokenHeader = request.getHeader("Cookie").split(";")[0].split("=")[1];
+		for(String cookie : request.getHeader("Cookie").split(";") ) {
+			if(cookie.split("=")[0] == "token" ) {
+				requestTokenHeader=cookie.split("=")[1];
+			}
+		}
 		System.out.println("token:"+requestTokenHeader);
 		String username = null;
 		String jwtToken = null;
