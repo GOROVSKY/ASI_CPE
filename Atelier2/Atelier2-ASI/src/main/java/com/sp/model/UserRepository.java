@@ -12,7 +12,7 @@ public interface UserRepository extends CrudRepository<Users, Long> { // Long: T
 
 	Users findById(int id);
 
-    List<Users> findByNameLike(String fullName);
+    List<Users> findByName(String name);
     List<Users> findBySurnameLike(String surname);
 
 }
