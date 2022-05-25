@@ -27,7 +27,7 @@ public class UserCrt {
 	public List<UsersDTO> users() {
 		List<UsersDTO> dtoList = new ArrayList<UsersDTO>();
 		for (Users users : usersService.getUserList()) {
-			dtoList.add(new UsersDTO(users.getName(), users.getSurname()));
+			dtoList.add(new UsersDTO(users.getName(), users.getSurname(),users.getWallet(),users.getId()));
 		}
 		return dtoList;
 
@@ -49,6 +49,13 @@ public class UserCrt {
 	public Users deleteUser(@RequestBody Users user) {
 		usersService.deleteUser(user);
 		return user;
+	}
+	
+	@RequestMapping(value = { "/token/{token}" }, method = RequestMethod.GET)
+	public UsersDTO getUsersByToken(@PathVariable @NotNull String token) {
+		Users u = usersService.findUsersIdByJwtToken(token).get(0);
+		UsersDTO uDto = new UsersDTO(u.getName(), u.getSurname(),u.getWallet(),u.getId());
+		return uDto;
 	}
 
 }

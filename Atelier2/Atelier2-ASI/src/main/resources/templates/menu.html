@@ -6,12 +6,6 @@
             src="https://code.jquery.com/jquery-3.3.1.js"
             >
         </script>
-        <script> 
-            $(function(){
-            $("#header").load("header.html"); 
-
-            });
-        </script> 
         
 	<link rel="stylesheet" type="text/css" href="../lib/Semantic-UI-CSS-master/semantic.min.css">
     </head>
@@ -21,7 +15,7 @@
             <i class="user circle outline icon"></i>
             <div class="content">
                 <span id="userNameId">Jdoe</span>
-                <div class="sub header"><span>5000</span>$</div>
+                <div class="sub header"><span id="wallet">5000</span>$</div>
             </div>
         </h3>
 
@@ -52,4 +46,5 @@
 	document.getElementById('buyButton').onclick = function() { window.location.assign("http://localhost:8080/cardBuy"); };
 	document.getElementById('sellButton').onclick = function() { window.location.assign("http://localhost:8080/cardSell"); };
 	</script>
+	<script src="js/header.js"></script>
 </html>

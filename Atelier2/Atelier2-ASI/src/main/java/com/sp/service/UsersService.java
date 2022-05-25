@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.sp.authentification.config.JwtTokenUtil;
 import com.sp.entity.Users;
 import com.sp.model.UserRepository;
 
@@ -22,6 +23,9 @@ public class UsersService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
 	public UsersService() {
 		
 	}
@@ -29,13 +33,13 @@ public class UsersService {
 	public List<Users> getUserList() {
 		List<Users> result = 
 				  StreamSupport.stream(userRepository.findAll().spliterator(), false)
-				    .collect(Collectors.toList());
+				  .collect(Collectors.toList());
 		return result;
 	}
-	
 
 	public Users addUser( Users u) {
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
+		u.setWallet(5000);
 		userRepository.save(u);
 		return u;
 	}
@@ -50,6 +54,11 @@ public class UsersService {
 	
 	public List<Users> findByName(String name) {
 		return userRepository.findByName(name);
+	}
+	
+	public List<Users> findUsersIdByJwtToken(String jwtToken) {
+		String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+		return userRepository.findByName(username);
 	}
 }
 
