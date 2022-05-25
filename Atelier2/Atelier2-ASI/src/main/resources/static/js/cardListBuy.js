@@ -1,15 +1,18 @@
+var cards = []
+
 $.ajax({
 	url: "http://localhost:8080/transactions",
 	contentType: "application/json",
 	dataType: 'json',
 	success: function (transactions) {
 		for (const transaction of transactions) {
+			console.log(transaction)
 			$.ajax({
 				url: "http://localhost:8080/cards/" + transaction.cardId,
 				contentType: "application/json",
 				dataType: 'json',
 				success: function (card) {
-					console.log(card);
+					cards.push(card);
 					let template = document.querySelector("#row");
 					let clone = document.importNode(template.content, true);
 					newContent = clone.firstElementChild.innerHTML
@@ -22,18 +25,19 @@ $.ajax({
 						.replace(/{{energy}}/g, card.energy)
 						.replace(/{{attack}}/g, card.attack)
 						.replace(/{{defense}}/g, card.defense)
+						.replace(/{{id}}/g, transaction.id)
+						.replace(/{{cardId}}/g, card.id)
 						.replace(/{{price}}/g, card.price);
 					clone.firstElementChild.innerHTML = newContent;
-
 
 					clone.firstElementChild.addEventListener("click", () => {
 						displayCard(card)
 					})
 
-
 					let cardContainer = document.querySelector("#tableContent");
 					cardContainer.appendChild(clone);
 
+					
 				}
 			})
 		}
@@ -65,6 +69,35 @@ function displayCard(card) {
 	clone.firstElementChild.innerHTML = newContent;
 	container.innerHTML = '';
 	container.appendChild(clone);
+}
+
+function buy(e) {
+	var idTransaction = e.getAttribute("data-id");
+
+	console.log(idTransaction)
+
+	var idCard = e.getAttribute("data-cardId");
+	var card = cards.find(x => x.id == idCard);
+
+	var reponse = confirm(`Voulez-vous acheter la carte ${card.name} ?`)
+	if (reponse) {
+		var myDate = new Date();
+		myDate = myDate.toISOString()
+		myDate = myDate.replace('T', ' ')
+		myDate = myDate.substring(0, 19);
+
+		let json = {
+			id: idTransaction,
+			buyerId: 1, //TODO
+			dateBuy: myDate 
+		};
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("PUT", "http://localhost:8080/transactions", true);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify(json));
+		//document.location = "http://localhost:8080/cardSell";
+	}
 }
 
 

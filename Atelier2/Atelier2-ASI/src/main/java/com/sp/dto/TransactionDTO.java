@@ -1,24 +1,25 @@
 package com.sp.dto;
 
-import java.util.Date;
 
 public class TransactionDTO  {
 
-
+	private Integer id;
 	private Integer cardId;
 	private Integer sellerId;
 	private Integer buyerId;
 	
 	public TransactionDTO(){
+		this.id = 0;
 		this.cardId = 0;
 		this.sellerId = 0;
 		this.buyerId = 0;
 	}
-	public TransactionDTO(Integer cardId,Integer sellerId,Integer buyerId) {
+	
+	public TransactionDTO(Integer id, Integer cardId,Integer sellerId,Integer buyerId) {
+		this.id = id;
 		this.cardId = cardId;
 		this.sellerId = sellerId;
 		this.buyerId = buyerId;
-
 	}
 	
 	public Integer getCardId() {
@@ -40,6 +41,12 @@ public class TransactionDTO  {
 	}
 	public void setBuyerId(Integer buyerId) {
 		this.buyerId = buyerId;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

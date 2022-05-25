@@ -30,7 +30,7 @@ public class TransactionCrt {
     public List<TransactionDTO> transaction() {
   		List<TransactionDTO> dtoList = new ArrayList<TransactionDTO>();
   		for(Transaction transaction :transactionService.getTransaction() ) {
-  			dtoList.add(new TransactionDTO(transaction.getCardId(),  transaction.getBuyerId(), transaction.getSellerId()  ));
+  			dtoList.add(new TransactionDTO(transaction.getId(), transaction.getCardId(),  transaction.getBuyerId(), transaction.getSellerId()  ));
   		}
   		return dtoList;
     	 
