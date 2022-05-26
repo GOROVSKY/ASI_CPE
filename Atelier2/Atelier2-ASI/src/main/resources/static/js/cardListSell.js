@@ -106,6 +106,12 @@ function sell(e) {
 		xhr.open("POST", "http://localhost:8080/transactions", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.send(JSON.stringify(json));
+		xhr.onreadystatechange = function() {
+		    if (xhr.readyState === 4) {
+				//Refresh market page
+				location.reload();
+		    }
+  		}
 		// document.location = "http://localhost:8080/menu";
 	}
 }

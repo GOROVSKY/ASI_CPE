@@ -38,10 +38,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				requestTokenHeader=cookie.split("=")[1];
 			}
 		}
-		System.out.println("token:"+requestTokenHeader);
+		//System.out.println("token:"+requestTokenHeader);
 		String username = null;
 		String jwtToken = null;
-		System.out.println("Token =:"+requestTokenHeader);
+		//System.out.println("Token =:"+requestTokenHeader);
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);

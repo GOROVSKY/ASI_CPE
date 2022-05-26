@@ -103,7 +103,13 @@ function buy(e) {
 		xhr.open("PUT", "http://localhost:8080/transactions", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.send(JSON.stringify(json));
-		//document.location = "http://localhost:8080/cardSell";
+
+		xhr.onreadystatechange = function() {
+		    if (xhr.readyState === 4) {
+				//Refresh market page
+				location.reload();
+		    }
+  		}
 	}
 }
 

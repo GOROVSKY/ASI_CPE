@@ -12,8 +12,11 @@ import com.sp.entity.Card;
 import com.sp.entity.Transaction;
 import com.sp.entity.UserCard;
 import com.sp.entity.UserCardId;
+import com.sp.entity.Users;
+import com.sp.model.CardRepository;
 import com.sp.model.TransactionRepository;
 import com.sp.model.UserCardRepository;
+import com.sp.model.UserRepository;
 
 
 @Service
@@ -24,6 +27,12 @@ public class TransactionService {
 	
 	@Autowired
 	UserCardRepository userCardRepository;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	CardRepository cardRepository;
 	
 	
 	public void addTransaction(Transaction transaction) {
@@ -38,7 +47,7 @@ public class TransactionService {
 	
 	public List<Transaction> getTransaction() {
 		List<Transaction> result = 
-				  StreamSupport.stream(transactionRepository.findAll().spliterator(), false)
+				  StreamSupport.stream(transactionRepository.findByBuyerIdIsNull().spliterator(), false)
 				    .collect(Collectors.toList());
 		return result;
 	}
@@ -50,11 +59,18 @@ public class TransactionService {
 		UserCard u = userCardRepository.findByIdCardIdAndIdUserId(t.getCardId(),t.getBuyerId());
 		if(u == null)
 		{
-			u = new UserCard(new UserCardId(t.getBuyerId(),t.getCardId()),1);
+			u = new UserCard(new UserCardId(t.getCardId(),t.getBuyerId()),1);
 		}
 		else {
 			u.setQuantity(u.getQuantity()+1);
 		}
+		Card card = cardRepository.findById(t.getCardId());
+		Users buyer = userRepository.findById(transaction.getBuyerId());
+		Users seller = userRepository.findById(t.getSellerId());
+		buyer.setWallet(buyer.getWallet()-card.getPrice().intValue());
+		seller.setWallet(seller.getWallet()+card.getPrice().intValue());
+		userRepository.save(buyer);
+		userRepository.save(seller);
 		userCardRepository.save(u);
 		transactionRepository.save(t);
 	}
