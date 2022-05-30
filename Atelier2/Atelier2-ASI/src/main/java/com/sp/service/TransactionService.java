@@ -64,6 +64,7 @@ public class TransactionService {
 		else {
 			u.setQuantity(u.getQuantity()+1);
 		}
+		//TODO CHECK WALLET BEFORE BUYING RETURN ERROR IF WALLET IS NOT ENOUGH
 		Card card = cardRepository.findById(t.getCardId());
 		Users buyer = userRepository.findById(transaction.getBuyerId());
 		Users seller = userRepository.findById(t.getSellerId());
