@@ -1,4 +1,4 @@
-package com.sp.model;
+/*package com.sp.model;
 
 import java.util.List;
 
@@ -12,4 +12,4 @@ import org.springframework.data.repository.CrudRepository;
 public interface CardTagRepository extends CrudRepository<List<String>, Long> {
 	
 
-}
+}*/
