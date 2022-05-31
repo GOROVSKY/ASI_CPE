@@ -35,7 +35,8 @@ public class TransactionService {
 	
 	private String getUrlUserCard ="http://localhost:8081/users/{userId}/inventory/{cardId}";
 	private String putUrlUserCard ="http://localhost:8081/users/{userId}/inventory";
-	private String urlUser ="http://localhost:8081/users/{userId}";
+	private String urlUserId ="http://localhost:8081/users/{userId}";
+	private String urlUser ="http://localhost:8081/users";
 	private String urlCard ="http://localhost:8082/cards/{cardId}";
 
 
@@ -99,17 +100,17 @@ public class TransactionService {
 		urlM = urlCard.replace("{cardId}", Integer.toString(transaction.getCardId()));
 		CardDTO card = this.restTemplate.getForObject(urlM, CardDTO.class);
 		
-		urlM = urlUser.replace("{userId}", Integer.toString(transaction.getBuyerId()));
+		urlM = urlUserId.replace("{userId}", Integer.toString(transaction.getBuyerId()));
 		UsersDTO buyer = this.restTemplate.getForObject(urlM, UsersDTO.class);
 		buyer.setWallet(buyer.getWallet()-card.getPrice().intValue());
 		
-		urlM = urlUser.replace("{userId}", Integer.toString(transaction.getSellerId()));
+		urlM = urlUserId.replace("{userId}", Integer.toString(transaction.getSellerId()));
 		UsersDTO seller = this.restTemplate.getForObject(urlM, UsersDTO.class);
 		buyer.setWallet(buyer.getWallet()+card.getPrice().intValue());
 
-		urlM = putUrlUserCard.replace("{userId}", Integer.toString(transaction.getBuyerId()));
-		this.restTemplate.put(urlUser, buyer);
-		this.restTemplate.put(urlUser, seller);
+
+		this.restTemplate.put(urlUser, buyer, UsersDTO.class);
+		this.restTemplate.put(urlUser, seller, UsersDTO.class);
 		
 
 		transactionRepository.save(t);
