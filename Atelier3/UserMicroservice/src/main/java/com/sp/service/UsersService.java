@@ -2,13 +2,16 @@ package com.sp.service;
 
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import java.util.Random;
 
 import com.sp.dto.CardDTO;
+import com.sp.dto.UserCardDTO;
 import com.sp.entity.UserCard;
 import com.sp.entity.UserCardId;
 import com.sp.entity.Users;
@@ -85,9 +88,74 @@ public class UsersService {
 		return userRepository.findByName(name);
 	}
 	
-//	public List<Users> findUsersIdByJwtToken(String jwtToken) {
-//		String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-//		return userRepository.findByName(username);
-//	}
+	public void updateUser(Users u) {
+		Users user = userRepository.findById(u.getId());
+		
+		//Modification
+		user.setWallet(u.getWallet());			
+		
+		//Enregistrement
+		userRepository.save(user);
+	}
+	
+	public List<UserCard> getInventory(Integer userId) {
+		List<UserCard> inventaire = new ArrayList<UserCard>();
+		
+		Users user = userRepository.findById(userId);
+		if (user == null) {
+			System.out.println("Le user avec l'id " + userId + " n'existe pas");
+			return inventaire;
+		}
+		
+		//Les ids de cartes de l'utilisateur
+		inventaire = StreamSupport.stream(userCardRepository.findAll().spliterator(), false).collect(Collectors.toList());
+		
+		return inventaire;
+	}
+	
+	public UserCard getInventoryByCardId(Integer userId, Integer cardId) {
+		UserCard userCard = userCardRepository.findByIdCardIdAndIdUserId(userId, cardId);
+		return userCard;
+	}
+
+	public void deleteUserCard(UserCard userCard) {
+		userCardRepository.delete(userCard);
+	}
+	
+	public static <T> Collector<T, ?, T> toSingleton() {
+	    return Collectors.collectingAndThen(
+	            Collectors.toList(),
+	            list -> {
+	                if (list.size() != 1) {
+	                    throw new IllegalStateException();
+	                }
+	                return list.get(0);
+	            }
+	    );
+	}
+
+	public void addUserCard(UserCard userCard) {
+		UserCard u = userCardRepository.findByIdCardIdAndIdUserId(userCard.getId().getCardId(), userCard.getId().getUserId());
+		
+		if(u != null)
+		{
+	        throw new IllegalStateException();
+		}
+		
+		userCardRepository.save(userCard);
+	}
+
+	public void updateUserCard(UserCard userCard) {
+		UserCard u = userCardRepository.findByIdCardIdAndIdUserId(userCard.getId().getCardId(), userCard.getId().getUserId());
+		
+		if(u == null)
+		{
+	        throw new IllegalStateException();
+		}
+		
+		u.setQuantity(userCard.getQuantity());
+		
+		userCardRepository.save(u);
+	}
 }
 
