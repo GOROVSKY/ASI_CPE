@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
 import java.util.Random;
 
 import com.sp.dto.CardDTO;
+import com.sp.dto.UserCardDTO;
 import com.sp.entity.UserCard;
 import com.sp.entity.UserCardId;
 import com.sp.entity.Users;
@@ -97,8 +98,8 @@ public class UsersService {
 		userRepository.save(user);
 	}
 	
-	public List<CardDTO> getInventory(Integer userId) {
-		List<CardDTO> inventaire = new ArrayList<CardDTO>();
+	public List<UserCard> getInventory(Integer userId) {
+		List<UserCard> inventaire = new ArrayList<UserCard>();
 		
 		Users user = userRepository.findById(userId);
 		if (user == null) {
@@ -107,20 +108,14 @@ public class UsersService {
 		}
 		
 		//Les ids de cartes de l'utilisateur
-		List<UserCard> userCard = StreamSupport.stream(userCardRepository.findAll().spliterator(), false).collect(Collectors.toList());
-		
-		//Le détail des cartes
-		List<CardDTO> cardsDTO = Arrays.asList(this.restTemplate.getForObject(urlCards, CardDTO[].class));
-		
-		for (UserCard card : userCard) {
-			CardDTO dto = cardsDTO.stream()
-					.filter(data -> data.getId() == card.getId().getCardId())
-					.collect(toSingleton());
-			inventaire.add(dto);
-		}
-
+		inventaire = StreamSupport.stream(userCardRepository.findAll().spliterator(), false).collect(Collectors.toList());
 		
 		return inventaire;
+	}
+	
+	public UserCard getInventoryByCardId(Integer userId, Integer cardId) {
+		UserCard userCard = userCardRepository.findByIdCardIdAndIdUserId(userId, cardId);
+		return userCard;
 	}
 
 	public void deleteUserCard(UserCard userCard) {

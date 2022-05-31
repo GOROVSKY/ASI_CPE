@@ -7,6 +7,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 import com.sp.dto.CardDTO;
+import com.sp.dto.UserCardDTO;
 import com.sp.dto.UsersDTO;
 import com.sp.entity.UserCard;
 import com.sp.entity.Users;
@@ -60,10 +61,26 @@ public class UserCrt {
 	}
 	
 	@RequestMapping(value = { "/users/{userId}/inventory" }, method = RequestMethod.GET)
-	public List<CardDTO> getUsersInventoryById(@PathVariable @NotNull @DecimalMin("0") Integer userId) {
-		List<CardDTO> liste = usersService.getInventory(userId);
-		return liste;
+	public List<UserCardDTO> getUsersInventoryById(@PathVariable @NotNull @DecimalMin("0") Integer userId) {
+		List<UserCard> liste = usersService.getInventory(userId);
+		
+		List<UserCardDTO> listeDTO = new ArrayList<UserCardDTO>();
+		
+		for (UserCard userCard : liste) {
+			listeDTO.add(new UserCardDTO(userCard.getId().getCardId(), userCard.getId().getUserId() ,userCard.getQuantity(), 100));
+		}
+		
+		return listeDTO;
 	}
+	
+	@RequestMapping(value = { "/users/{userId}/inventory/{cardId}" }, method = RequestMethod.GET)
+	public UserCardDTO getUsersInventoryById(@PathVariable @NotNull @DecimalMin("0") Integer userId, @PathVariable @NotNull @DecimalMin("0") Integer cardId) {
+		UserCard userCard = usersService.getInventoryByCardId(userId, cardId);
+		
+		UserCardDTO dto = new UserCardDTO(cardId, userId, userCard.getQuantity(), 100);
+		return dto;
+	}
+	
 	
 	@RequestMapping(value = { "/users/{userId}/inventory" }, method = RequestMethod.DELETE)
 	public void deleteUserCard(@RequestBody UserCard userCard) {
