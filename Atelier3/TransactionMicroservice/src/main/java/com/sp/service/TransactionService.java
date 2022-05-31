@@ -20,6 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter; 
 import com.sp.entity.Transaction;
 import com.sp.dto.UserCardDTO;
+import com.sp.dto.UsersDTO;
+import com.sp.dto.CardDTO;
+
 import com.sp.model.TransactionRepository;
 
 
@@ -30,8 +33,13 @@ public class TransactionService {
 	@Autowired
 	TransactionRepository transactionRepository;
 	
-	private String urlUserCard ="http://localhost:8081/users/?/inventory";
-	
+	private String getUrlUserCard ="http://localhost:8081/users/{userId}/inventory/{cardId}";
+	private String putUrlUserCard ="http://localhost:8081/users/{userId}/inventory";
+	private String urlUser ="http://localhost:8081/users/{userId}";
+	private String urlCard ="http://localhost:8082/cards/{cardId}";
+
+
+
 	private final RestTemplate restTemplate;
 
 	public TransactionService(RestTemplateBuilder restTemplateBuilder) {
@@ -40,26 +48,24 @@ public class TransactionService {
 
 	public void addTransaction(Transaction transaction) {
 		
-		URL url;
-		try {
-			System.out.println("url: " + urlUserCard.replace('?', (char)(transaction.getSellerId()+'0')));
-
-			UserCardDTO u = this.restTemplate.getForObject(urlUserCard.replace('?', (char)(transaction.getSellerId()+'0')), UserCardDTO.class);
-
-			System.out.println("u: " + u);
-			
-			//UserCard u = userCardRepository.findByIdCardIdAndIdUserId(transaction.getCardId(),transaction.getSellerId());
-			if(u.getQuantity()>0)
-			{
-				u.setQuantity(u.getQuantity()-1);
-				this.restTemplate.postForObject(urlUserCard,u, UserCardDTO.class);
-				transactionRepository.save(transaction);
-			}
-		}
-		catch(Exception e)
+		String urlM = getUrlUserCard.replace("{userId}", Integer.toString(transaction.getSellerId()));
+		urlM = urlM.replace("{cardId}", Integer.toString(transaction.getCardId()));
+		System.out.println(urlM);
+		UserCardDTO u = this.restTemplate.getForObject(urlM, UserCardDTO.class);
+		
+		if(u == null)
 		{
-			e.printStackTrace();
+			System.out.println("UserCardList nulle, l'utilisateur ne posede pas la carte");
 		}
+		else {
+			//u = userCardList[0];
+			u.setQuantity(u.getQuantity()-1);
+			urlM = putUrlUserCard.replace("{userId}", Integer.toString(transaction.getSellerId()));
+			System.out.println(urlM);
+			this.restTemplate.put(urlM,u, UserCardDTO.class);
+			transactionRepository.save(transaction);
+		}
+		
 	}
 	
 	public List<Transaction> getTransaction() {
@@ -73,24 +79,41 @@ public class TransactionService {
 		Transaction t = transactionRepository.findById(transaction.getId());
 		t.setBuyerId(transaction.getBuyerId());
 		t.setDateBuy(transaction.getDateBuy());
-		/*UserCard u = userCardRepository.findByIdCardIdAndIdUserId(t.getCardId(),t.getBuyerId());
+		
+		String urlM = getUrlUserCard.replace("{userId}", Integer.toString(transaction.getSellerId()));
+		urlM = urlM.replace("{cardId}", Integer.toString(transaction.getCardId()));
+		System.out.println(urlM);
+		UserCardDTO u = this.restTemplate.getForObject(urlM, UserCardDTO.class);
+		
+		urlM = putUrlUserCard.replace("{userId}", Integer.toString(transaction.getBuyerId()));
 		if(u == null)
 		{
-			u = new UserCard(new UserCardId(t.getCardId(),t.getBuyerId()),1);
+			u = new UserCardDTO(t.getCardId(),t.getBuyerId(),1,100);
+			this.restTemplate.postForObject(urlM, u, UserCardDTO.class);
 		}
 		else {
 			u.setQuantity(u.getQuantity()+1);
+			this.restTemplate.put(urlM, u, UserCardDTO.class);
 		}
-		//TODO CHECK WALLET BEFORE BUYING RETURN ERROR IF WALLET IS NOT ENOUGH
-		Card card = cardRepository.findById(t.getCardId());
-		Users buyer = userRepository.findById(transaction.getBuyerId());
-		Users seller = userRepository.findById(t.getSellerId());
+		
+		urlM = urlCard.replace("{cardId}", Integer.toString(transaction.getCardId()));
+		CardDTO card = this.restTemplate.getForObject(urlM, CardDTO.class);
+		
+		urlM = urlUser.replace("{userId}", Integer.toString(transaction.getBuyerId()));
+		UsersDTO buyer = this.restTemplate.getForObject(urlM, UsersDTO.class);
 		buyer.setWallet(buyer.getWallet()-card.getPrice().intValue());
-		seller.setWallet(seller.getWallet()+card.getPrice().intValue());
-		userRepository.save(buyer);
-		userRepository.save(seller);
-		userCardRepository.save(u);
-		transactionRepository.save(t);*/
+		
+		urlM = urlUser.replace("{userId}", Integer.toString(transaction.getSellerId()));
+		UsersDTO seller = this.restTemplate.getForObject(urlM, UsersDTO.class);
+		buyer.setWallet(buyer.getWallet()+card.getPrice().intValue());
+
+		urlM = putUrlUserCard.replace("{userId}", Integer.toString(transaction.getBuyerId()));
+		this.restTemplate.put(urlUser, buyer);
+		this.restTemplate.put(urlUser, seller);
+		
+
+		transactionRepository.save(t);
+		//TODO CHECK WALLET BEFORE BUYING RETURN ERROR IF WALLET IS NOT ENOUGH
 	}
 	
 	public void deleteTransaction(Transaction transaction) {
