@@ -64,7 +64,7 @@ public class UsersService {
 			UserCard uc = userCardRepository.findByIdCardIdAndIdUserId(c.getId(), u.getId());
 			if(uc == null)
 			{
-				uc = new UserCard(new UserCardId(c.getId(),u.getId()),1);
+				uc = new UserCard(new UserCardId(c.getId(),u.getId()), 1, 100);
 			}
 			else {
 				uc.setQuantity(uc.getQuantity()+1);

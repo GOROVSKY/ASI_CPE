@@ -17,6 +17,7 @@ public class UserCard implements java.io.Serializable {
 
 	private UserCardId id;
 	private Integer quantity;
+	private Integer energy;
 
 	public UserCard() {
 	}
@@ -25,9 +26,10 @@ public class UserCard implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public UserCard(UserCardId id, Integer quantity) {
+	public UserCard(UserCardId id, Integer quantity, Integer energy) {
 		this.id = id;
 		this.quantity = quantity;
+		this.energy = energy;
 	}
 
 	@EmbeddedId
@@ -49,6 +51,14 @@ public class UserCard implements java.io.Serializable {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Integer getEnergy() {
+		return energy;
+	}
+
+	public void setEnergy(Integer energy) {
+		this.energy = energy;
 	}
 
 }

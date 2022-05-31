@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%">
 
 <head>
     <!-- Standard Meta -->
@@ -16,23 +16,37 @@
 
 </head>
 
-<body>
-    <header style="height: 80px; border-bottom: 1px solid black;" class="d-flex justify-content-between ps-5 pe-5">
-        <button class="btn btn-primary" id="menuButton">Menu</button>
-        <div>Create a room</div>
-        <div>User</div>
-    </header>
+<body style="height: 100%">
+    <div class="d-flex flex-column h-100">
+        <header style="height: 80px; border-bottom: 1px solid black;"
+            class="d-flex justify-content-between ps-5 pe-5 w-100">
+            <button class="btn btn-primary" id="menuButton">Menu</button>
+            <div>Create a room</div>
+            <div>User</div>
+        </header>
 
-    
+        <div style="flex-grow: 1;" class="d-flex align-items-center justify-content-center w-100">
+            <fieldset class="p-4 border">
+                <legend class="w-auto float-nonte">Create a room</legend>
+                <div class="d-flex flex-column">
+                    <input class="form-control mb-2" placeholder="Name">
+                    <input class="form-control mb-4" placeholder="Bet">
+                    <button class="btn btn-primary mb-2" id="buttonCreate">Create</button>
+                    <button class="btn btn-secondary">Cancel</button>
+
+                </div>
+            </fieldset>
+        </div>
+    </div>
 
 </body>
 
-<script src="lib/Semantic-UI-CSS-master/semantic.js"></script>
-<script src="lib/jquery-3.3.1.min.js"></script>
-<script src="js/header.js"></script>
+<!-- <script src="../static/lib/Semantic-UI-CSS-master/semantic.js"></script>
+<script src="../static/lib/jquery-3.3.1.min.js"></script>
+<script src="../static/js/header.js"></script> -->
 
 <script type="text/javascript">
-    document.getElementById('menuButton').onclick = function () { window.location.assign("menu.html"); };
+    document.getElementById('buttonCreate').onclick = function () { window.location.assign("card.select.html"); };
 </script>
 
 </html>
