@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -51,8 +52,8 @@ public class UserCrt {
 		return dto;
 	}
 
-	@RequestMapping(value = { "/users/{userName}" }, method = RequestMethod.GET)
-	public UsersDTO getUsersByName(@PathVariable @NotNull String userName) {
+	@RequestMapping(value = "/users", params = "userName", method = RequestMethod.GET)
+	public UsersDTO getUsersByName(@RequestParam String userName) {
 		Users users = usersService.findUsersByName(userName);
 		UsersDTO dto = new UsersDTO(users.getName(), users.getSurname(), users.getPassword(), users.getWallet(),users.getId());
 		return dto;
