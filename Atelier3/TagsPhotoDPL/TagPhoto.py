@@ -54,13 +54,13 @@ model= tf.saved_model.load("faster_rcnn/saved_model")
 
 @app.route('/', methods=['GET'])
 def home():
-    return '''<h1>Annuaire Internet</h1>
-<p>Ce site est le prototype d’une API mettant à disposition des données sur les employés d’une entreprise.</p>'''
+    return '''<h1>TAGs pour Photo</h1>
+<p>Ce site est le prototype d’une API mettant à disposition les TAGs d'une photo via un systeme de Deep Learning.</p>
+<p>Rajouter à l'url /api/v1/resources/photo?url=VOTRE_URL_DE_PHOTO</p>
+<p>Example : http://127.0.0.1:5000/api/v1/resources/photo?url=https://cdn.paris.fr/paris/2020/02/20/original-b9dd32cf72063e2f7e2425a77107749f.jpg</p>'''
  
  
-@app.route('/api/v1/resources/employees/all', methods=['GET'])
-def api_all():
-    return jsonify(employees)
+
  
  
 @app.route('/api/v1/resources/photo', methods=['GET'])
