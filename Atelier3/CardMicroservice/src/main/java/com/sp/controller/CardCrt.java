@@ -52,7 +52,7 @@ public class CardCrt {
 	}
 
 	@RequestMapping(value = { "/cards" }, method = RequestMethod.PUT)
-	public void updateCard(Card card) {
+	public void updateCard(@RequestBody Card card) {
 		cardService.addCard(card);
 	}
 
