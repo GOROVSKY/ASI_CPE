@@ -17,7 +17,6 @@ import com.sp.model.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,13 +28,10 @@ public class UsersService {
 
 	@Autowired
     private UserCardRepository userCardRepository;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;;
 
 
 	private final RestTemplate restTemplate;
-	private String urlCards = "https://localhost/cards";
+	private String urlCards = "http://localhost:8080/cards";
 	
 	public UsersService(RestTemplateBuilder restTemplateBuilder) {
 		this.restTemplate = restTemplateBuilder.build();
@@ -49,12 +45,12 @@ public class UsersService {
 	}
 
 	public Users addUser( Users u) {
-		u.setPassword(passwordEncoder.encode(u.getPassword()));
+		u.setPassword(u.getPassword());
 		u.setWallet(5000);
+				
+		userRepository.save(u);
 		
 		CardDTO[] result = this.restTemplate.getForObject(urlCards, CardDTO[].class);
-		
-		userRepository.save(u);
 		
 		Random random = new Random();
 		for(int i=0;i<5;i++)
@@ -70,6 +66,7 @@ public class UsersService {
 			else {
 				uc.setQuantity(uc.getQuantity()+1);
 			}
+			
 			userCardRepository.save(uc);
 		}
 		
