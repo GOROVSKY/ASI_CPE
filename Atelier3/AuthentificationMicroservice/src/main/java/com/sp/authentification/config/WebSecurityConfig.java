@@ -27,9 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService jwtUserDetailsService;
 
 	@Autowired
-	private JwtRequestFilter jwtRequestFilter;
-
-	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		// configure AuthenticationManager so that it knows from where to load
 		// user for matching credentials
@@ -60,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// make sure we use stateless session; session won't be used to
 				// store user's state.
 				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// Add a filter to validate the tokens with every request
 		//httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

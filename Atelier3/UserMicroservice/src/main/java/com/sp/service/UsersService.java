@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Random;
 
 import com.sp.dto.CardDTO;
+import com.sp.dto.PasswordHashDTO;
 import com.sp.dto.UserCardDTO;
 import com.sp.entity.UserCard;
 import com.sp.entity.UserCardId;
@@ -23,6 +24,8 @@ import com.sp.model.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,7 +40,8 @@ public class UsersService {
 
 
 	private final RestTemplate restTemplate;
-	private String urlCards = "http://localhost:8080/cards";
+	private String urlCards = "http://localhost:8083/cards";
+	private String urlAuth = "http://localhost:8084/hashpassword";
 	
 	public UsersService(RestTemplateBuilder restTemplateBuilder) {
 		this.restTemplate = restTemplateBuilder.build();
@@ -51,9 +55,17 @@ public class UsersService {
 	}
 
 	public Users addUser( Users u) {
-		//TODO get hash password with auth microservice
-		//Password password = this.restTemplate.getForObject(urlAuth, Password[].class).get(0);
-		//u.setPassword(password);
+		
+		PasswordHashDTO pass = new PasswordHashDTO(u.getPassword());
+		System.out.println("PASSWORD : " + pass.getPassword());
+		
+		
+		
+		ResponseEntity<PasswordHashDTO> password = this.restTemplate.postForEntity(urlAuth, pass, PasswordHashDTO.class);
+		
+		System.out.println("PASSWORD : " + password.getBody().getPassword());
+		
+		u.setPassword(password.getBody().getPassword());
 		u.setPassword(u.getPassword());
 		u.setWallet(5000);
 				
