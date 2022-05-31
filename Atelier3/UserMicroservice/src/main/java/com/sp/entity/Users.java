@@ -30,7 +30,7 @@ public class Users implements java.io.Serializable {
 		this.name = name;
 		this.surname = surname;
 		this.password = password;
-		this.wallet=5000;
+		this.wallet = 5000;
 	}
 
 	@Column(name = "id", unique = true, nullable = false)

@@ -154,6 +154,7 @@ public class UsersService {
 		}
 		
 		u.setQuantity(userCard.getQuantity());
+		u.setEnergy(userCard.getEnergy());
 		
 		userCardRepository.save(u);
 	}

@@ -10,6 +10,7 @@ import com.sp.dto.CardDTO;
 import com.sp.dto.UserCardDTO;
 import com.sp.dto.UsersDTO;
 import com.sp.entity.UserCard;
+import com.sp.entity.UserCardId;
 import com.sp.entity.Users;
 import com.sp.service.UsersService;
 
@@ -30,34 +31,36 @@ public class UserCrt {
 	public List<UsersDTO> users() {
 		List<UsersDTO> dtoList = new ArrayList<UsersDTO>();
 		for (Users users : usersService.getUserList()) {
-			dtoList.add(new UsersDTO(users.getName(), users.getSurname(),users.getWallet(),users.getId()));
+			dtoList.add(new UsersDTO(users.getName(), users.getSurname(), users.getPassword(), users.getWallet(),users.getId()));
 		}
 		return dtoList;
 
 	}
 
 	@RequestMapping(value = { "/users" }, method = RequestMethod.POST)
-	public String addUser(@RequestBody Users user) {
-		usersService.addUser(user);
-		return user.toString();
+	public String addUser(@RequestBody UsersDTO users) {
+		Users u = new Users(users.getName(), users.getSurname(), users.getPassword());
+		usersService.addUser(u);
+		return u.toString();
 	}
 
 	@RequestMapping(value = { "/users/{userId}" }, method = RequestMethod.GET)
-	public Users getUsersById(@PathVariable @NotNull @DecimalMin("0") Integer userId) {
-		Users u = usersService.findUsersById(userId);
-		return u;
+	public UsersDTO getUsersById(@PathVariable @NotNull @DecimalMin("0") Integer userId) {
+		Users users = usersService.findUsersById(userId);
+		UsersDTO dto = new UsersDTO(users.getName(), users.getSurname(), users.getPassword(), users.getWallet(),users.getId());
+		return dto;
 	}
 
 	@RequestMapping(value = { "/users" }, method = RequestMethod.DELETE)
-	public Users deleteUser(@RequestBody Users user) {
-		usersService.deleteUser(user);
-		return user;
+	public void deleteUser(@RequestBody UsersDTO user) {
+		Users u = new Users(user.getName(), user.getSurname(), user.getPassword());
+		usersService.deleteUser(u);
 	}
 	
 	@RequestMapping(value = { "/users" }, method = RequestMethod.PUT)
-	public Users updateUser(@RequestBody Users user) {
-		usersService.updateUser(user);
-		return user;
+	public void updateUser(@RequestBody UsersDTO user) {
+		Users u = new Users(user.getName(), user.getSurname(), user.getPassword());
+		usersService.updateUser(u);
 	}
 	
 	@RequestMapping(value = { "/users/{userId}/inventory" }, method = RequestMethod.GET)
@@ -88,13 +91,15 @@ public class UserCrt {
 	}
 	
 	@RequestMapping(value = { "/users/{userId}/inventory" }, method = RequestMethod.POST)
-	public UserCard addUserCard(@RequestBody UserCard userCard) {
-		usersService.addUserCard(userCard);
+	public UserCardDTO addUserCard(@RequestBody UserCardDTO userCard) {
+		UserCard uc = new UserCard(new UserCardId(userCard.getCardId(), userCard.getUserId()), userCard.getQuantity(), userCard.getEnergy());
+		usersService.addUserCard(uc);
 		return userCard;
 	}
 	
 	@RequestMapping(value = { "/users/{userId}/inventory" }, method = RequestMethod.PUT)
-	public void updateUserCard(@RequestBody UserCard userCard) {
-		usersService.updateUserCard(userCard);
+	public void updateUserCard(@RequestBody UserCardDTO userCard) {
+		UserCard uc = new UserCard(new UserCardId(userCard.getCardId(), userCard.getUserId()), userCard.getQuantity(), userCard.getEnergy());
+		usersService.updateUserCard(uc);
 	}
 }
