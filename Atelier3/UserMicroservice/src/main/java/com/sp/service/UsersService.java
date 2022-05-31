@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import javax.validation.constraints.NotNull;
+
 import java.util.Random;
 
 import com.sp.dto.CardDTO;
@@ -48,6 +51,9 @@ public class UsersService {
 	}
 
 	public Users addUser( Users u) {
+		//TODO get hash password with auth microservice
+		//Password password = this.restTemplate.getForObject(urlAuth, Password[].class).get(0);
+		//u.setPassword(password);
 		u.setPassword(u.getPassword());
 		u.setWallet(5000);
 				
@@ -157,6 +163,11 @@ public class UsersService {
 		u.setEnergy(userCard.getEnergy());
 		
 		userCardRepository.save(u);
+	}
+
+	public Users findUsersByName(@NotNull String userName) {
+		Users user = userRepository.findByName(userName).get(0);
+		return user;
 	}
 }
 

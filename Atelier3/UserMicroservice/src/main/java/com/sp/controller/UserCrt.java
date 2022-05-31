@@ -51,6 +51,13 @@ public class UserCrt {
 		return dto;
 	}
 
+	@RequestMapping(value = { "/users/{userName}" }, method = RequestMethod.GET)
+	public UsersDTO getUsersByName(@PathVariable @NotNull String userName) {
+		Users users = usersService.findUsersByName(userName);
+		UsersDTO dto = new UsersDTO(users.getName(), users.getSurname(), users.getPassword(), users.getWallet(),users.getId());
+		return dto;
+	}
+
 	@RequestMapping(value = { "/users" }, method = RequestMethod.DELETE)
 	public void deleteUser(@RequestBody UsersDTO user) {
 		Users u = new Users(user.getName(), user.getSurname(), user.getPassword());
