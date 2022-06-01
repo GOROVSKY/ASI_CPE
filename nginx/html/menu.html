@@ -37,7 +37,7 @@
                 <img src="images/trade.png" alt="icone" style="position:relative;width: 100px;height: auto; z-index:20; margin:0px;"/>Sell</button>
         </div>
         <div style="display:flex; justify-content: center; margin-top:50px">
-            <button style="display:flex; width:flex; height:150px; width:250px; font-size: 40px; align-content: center;align-items: center;">
+            <button id='playButton' style="display:flex; width:flex; height:150px; width:250px; font-size: 40px; align-content: center;align-items: center;">
             <img src="images/console.png" alt="icone" style="position:relative;width: 100px;height: auto; z-index:20; margin:0px;"/>Play</button>
         </div>
     </div>
@@ -45,6 +45,7 @@
   <script type="text/javascript">
 	document.getElementById('buyButton').onclick = function() { window.location.assign("http://localhost:80/cardBuy"); };
 	document.getElementById('sellButton').onclick = function() { window.location.assign("http://localhost:80/cardSell"); };
+    document.getElementById('playButton').onclick = function() { window.location.assign("http://localhost:80/roomList"); };
 	</script>
 	<script src="js/header.js"></script>
 </html>

@@ -1,7 +1,2 @@
-
 sudo docker build -t nginx-server .
 sudo docker run -it -d --network host --name nginx_asi -p 80:80 nginx-server
-To remove docker
-sudo docker stop nginx_asi
-sudo docker rm nginx_asi
-sudo docker image rm nginx-server

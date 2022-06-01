@@ -8,9 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
     <!-- Site Properties -->
-    <title>Market Buy</title>
+    <title>Market Sell</title>
 
     <link rel="stylesheet" type="text/css" href="../lib/Semantic-UI-CSS-master/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
 
 </head>
 
@@ -29,8 +30,8 @@
         <h3 class="ui left floated header">
             <i class="money icon"></i>
             <div class="content">
-                BUY
-                <div class="sub header">BUY your card to get money</div>
+                SELL
+                <div class="sub header">Sell your card to get money</div>
             </div>
         </h3>
     </div>
@@ -39,7 +40,7 @@
     <div class="ui grid">
         <div class="ten wide column">
             <!--  <h3 class="ui center aligned header"> My Card List</h3> -->
-            <h3 class="ui aligned header"> Cards</h3>
+            <h3 class="ui aligned header"> Cards </h3>
             <!------------------------------------------------------------------------->
             <!--    ----------------------------- List ----------------------------- -->
             <!------------------------------------------------------------------------->
@@ -54,7 +55,7 @@
                         <th>Defence</th>
                         <th>Attack</th>
                         <th>Price</th>
-                        <th></th>
+                        <th>Quantity</th>
                     </tr>
                 </thead>
                 <tbody id="tableContent">
@@ -70,14 +71,7 @@
                             <td>{{defense}}</td>
                             <td>{{attack}}</td>
                             <td>{{price}}$</td>
-                            <td>
-                                <div class="ui vertical animated button" tabindex="0" data-id="{{id}}" data-cardId="{{cardId}}" onclick="buy(this)">
-                                    <div class="hidden content">BUY</div>
-                                    <div class="visible content">
-                                        <i class="shop icon"></i>
-                                    </div>
-                                </div>
-                            </td>
+                            <td>{{quantity}}</td>
                         </tr>
                     </template>
                 </tbody>
@@ -122,7 +116,7 @@
                                     <div class="field">
                                         <label id="cardNameId"></label>
                                         <textarea id="cardDescriptionId" class="overflowHiden" readonly="" rows="5">{{description}}
-                                        </textarea>
+                                            </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -149,14 +143,19 @@
                         </div>
 
                     </div>
+                    <div style="margin-bottom: 100px">
+                        <button class="button">PLAY</button>
+                    </div>
                 </div>
             </template>
-
         </div>
-    </div>
-</body>
-<script src="lib/Semantic-UI-CSS-master/semantic.js"></script>
-<script src="lib/jquery-3.3.1.min.js"></script>
-<script src="js/header.js"></script>
-<script src="js/cardListBuy.js"></script>
+        
+        <script src="lib/Semantic-UI-CSS-master/semantic.js"></script>
+        <script src="lib/jquery-3.3.1.min.js"></script> 
+        <script src="js/header.js"></script>
+        <script src="js/cardListSelect.js"></script> 
+        
+    </body>
+
+
 </html>

@@ -2,21 +2,18 @@ package com.sp.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import com.sp.dto.CardDTO;
 import com.sp.entity.Card;
 import com.sp.entity.CardTag;
 import com.sp.model.CardRepository;
 import com.sp.model.CardTagRepository;
 
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.json.*;
 
 @Service
 public class CardService {
