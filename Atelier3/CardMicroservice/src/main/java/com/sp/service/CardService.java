@@ -33,8 +33,8 @@ public class CardService {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 	public void addCard(Card card) {
+		try {
 		String cardtag = this.restTemplate.getForObject(urlTag + card.getImageUrl(), String.class);
-		
 		JSONObject jsonObject = new JSONObject(cardtag);
 		JSONArray listTag = jsonObject.getJSONArray("tags");
 		List<String> tags = new ArrayList<String>();
@@ -45,7 +45,11 @@ public class CardService {
 				   CardTagRepository.save(ct);
 			   } 
 			} 
-		
+		}
+		catch(Exception e)
+		{
+			System.out.println("Connexion impossible avec flask");
+		}
 
 		cardRepository.save(card);
 	}
