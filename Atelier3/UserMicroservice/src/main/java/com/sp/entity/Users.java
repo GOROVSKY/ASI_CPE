@@ -32,6 +32,14 @@ public class Users implements java.io.Serializable {
 		this.password = password;
 		this.wallet = 5000;
 	}
+	
+	public Users(Integer id, String name, String surname, String password, Integer wallet) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.password = password;
+		this.wallet = wallet;
+	}
 
 	@Column(name = "id", unique = true, nullable = false)
 	public int getId() {

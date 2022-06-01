@@ -67,7 +67,7 @@ public class UserCrt {
 	
 	@RequestMapping(value = { "/users" }, method = RequestMethod.PUT)
 	public void updateUser(@RequestBody UsersDTO user) {
-		Users u = new Users(user.getName(), user.getSurname(), user.getPassword());
+		Users u = new Users(user.getId(), user.getName(), user.getSurname(), user.getPassword(), user.getWallet());
 		usersService.updateUser(u);
 	}
 	
