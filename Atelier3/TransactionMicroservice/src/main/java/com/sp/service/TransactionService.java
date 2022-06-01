@@ -1,29 +1,19 @@
 package com.sp.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import com.sp.dto.CardDTO;
+import com.sp.dto.UserCardDTO;
+import com.sp.dto.UsersDTO;
+import com.sp.entity.Transaction;
+import com.sp.model.TransactionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter; 
-import com.sp.entity.Transaction;
-import com.sp.dto.UserCardDTO;
-import com.sp.dto.UsersDTO;
-import com.sp.dto.CardDTO;
-
-import com.sp.model.TransactionRepository;
 
 
 
@@ -33,11 +23,11 @@ public class TransactionService {
 	@Autowired
 	TransactionRepository transactionRepository;
 	
-	private String getUrlUserCard ="http://localhost:8081/users/{userId}/inventory/{cardId}";
-	private String putUrlUserCard ="http://localhost:8081/users/{userId}/inventory";
-	private String urlUserId ="http://localhost:8081/users/{userId}";
-	private String urlUser ="http://localhost:8081/users";
-	private String urlCard ="http://localhost:8082/cards/{cardId}";
+	private String getUrlUserCard ="http://localhost:80/users/{userId}/inventory/{cardId}";
+	private String putUrlUserCard ="http://localhost:80/users/{userId}/inventory";
+	private String urlUserId ="http://localhost:80/users/{userId}";
+	private String urlUser ="http://localhost:80/users";
+	private String urlCard ="http://localhost:80/cards/{cardId}";
 
 
 
@@ -81,12 +71,12 @@ public class TransactionService {
 		t.setBuyerId(transaction.getBuyerId());
 		t.setDateBuy(transaction.getDateBuy());
 		
-		String urlM = getUrlUserCard.replace("{userId}", Integer.toString(transaction.getSellerId()));
-		urlM = urlM.replace("{cardId}", Integer.toString(transaction.getCardId()));
+		String urlM = getUrlUserCard.replace("{userId}", Integer.toString(t.getSellerId()));
+		urlM = urlM.replace("{cardId}", Integer.toString(t.getCardId()));
 		System.out.println(urlM);
 		UserCardDTO u = this.restTemplate.getForObject(urlM, UserCardDTO.class);
 		
-		urlM = putUrlUserCard.replace("{userId}", Integer.toString(transaction.getBuyerId()));
+		urlM = putUrlUserCard.replace("{userId}", Integer.toString(t.getBuyerId()));
 		if(u == null)
 		{
 			u = new UserCardDTO(t.getCardId(),t.getBuyerId(),1,100);
@@ -97,14 +87,14 @@ public class TransactionService {
 			this.restTemplate.put(urlM, u, UserCardDTO.class);
 		}
 		
-		urlM = urlCard.replace("{cardId}", Integer.toString(transaction.getCardId()));
+		urlM = urlCard.replace("{cardId}", Integer.toString(t.getCardId()));
 		CardDTO card = this.restTemplate.getForObject(urlM, CardDTO.class);
 		
-		urlM = urlUserId.replace("{userId}", Integer.toString(transaction.getBuyerId()));
+		urlM = urlUserId.replace("{userId}", Integer.toString(t.getBuyerId()));
 		UsersDTO buyer = this.restTemplate.getForObject(urlM, UsersDTO.class);
 		buyer.setWallet(buyer.getWallet()-card.getPrice().intValue());
 		
-		urlM = urlUserId.replace("{userId}", Integer.toString(transaction.getSellerId()));
+		urlM = urlUserId.replace("{userId}", Integer.toString(t.getSellerId()));
 		UsersDTO seller = this.restTemplate.getForObject(urlM, UsersDTO.class);
 		buyer.setWallet(buyer.getWallet()+card.getPrice().intValue());
 

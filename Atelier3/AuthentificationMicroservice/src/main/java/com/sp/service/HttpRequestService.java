@@ -15,8 +15,8 @@ public class HttpRequestService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public UsersDTO getUsers() {
-        String url = "http://localhost:8081/users";
+    public UsersDTO getUsersByName(String name) {
+        String url = "http://localhost:8081/users?userName="+name;
         return this.restTemplate.getForObject(url, UsersDTO.class);
     }
 }

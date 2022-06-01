@@ -88,9 +88,12 @@ public class UserCrt {
 	@RequestMapping(value = { "/users/{userId}/inventory/{cardId}" }, method = RequestMethod.GET)
 	public UserCardDTO getUsersInventoryById(@PathVariable @NotNull @DecimalMin("0") Integer userId, @PathVariable @NotNull @DecimalMin("0") Integer cardId) {
 		UserCard userCard = usersService.getInventoryByCardId(userId, cardId);
-		
-		UserCardDTO dto = new UserCardDTO(cardId, userId, userCard.getQuantity(), 100);
-		return dto;
+		if(userCard == null) {
+			return null;
+		}else {
+			UserCardDTO dto = new UserCardDTO(cardId, userId, userCard.getQuantity(), 100);
+			return dto;
+		}
 	}
 	
 	

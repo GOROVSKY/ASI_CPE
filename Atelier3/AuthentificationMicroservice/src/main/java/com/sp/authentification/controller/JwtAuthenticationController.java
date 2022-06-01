@@ -39,8 +39,7 @@ public class JwtAuthenticationController {
 	@Autowired
 	private UserDetailsService jwtInMemoryUserDetailsService;
 	
-	@Autowired
-	private HttpRequestService httpRequestService;
+	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
@@ -67,10 +66,6 @@ public class JwtAuthenticationController {
 		
 	}
 	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public void test() {
-		System.out.println(httpRequestService.getUsers());
-	}
 
 	private void authenticate(String username, String password) throws Exception {
 		Objects.requireNonNull(username);
