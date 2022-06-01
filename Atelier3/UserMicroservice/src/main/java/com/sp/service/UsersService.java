@@ -110,6 +110,7 @@ public class UsersService {
 		Users user = userRepository.findById(u.getId());
 		
 		//Modification
+		System.out.println(u.getId() + ""+ u.getClass());
 		user.setWallet(u.getWallet());			
 		
 		//Enregistrement
