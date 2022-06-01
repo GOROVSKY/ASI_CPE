@@ -1,24 +1,31 @@
 package com.sp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import com.sp.dto.CardDTO;
-import com.sp.dto.CardTagDTO;
 import com.sp.entity.Card;
+import com.sp.entity.CardTag;
 import com.sp.model.CardRepository;
+import com.sp.model.CardTagRepository;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.json.*;
 
 @Service
 public class CardService {
 	private String urlTag = "http://127.0.0.1:5000/api/v1/resources/photo?url="	;
 	@Autowired
-	CardRepository cardRepository ;
+	CardRepository cardRepository;
+	
+	@Autowired
+	CardTagRepository CardTagRepository;
 	
 	private final RestTemplate restTemplate;
 
@@ -26,11 +33,21 @@ public class CardService {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 	public void addCard(Card card) {
+		System.out.println(urlTag + card.getImageUrl());
+		String cardtag = this.restTemplate.getForObject(urlTag + card.getImageUrl(), String.class);
 		
-		List<String> cardtag = this.restTemplate.getForObject(urlTag + card.getImageUrl(), List.class);
-		cardtag.size();
-		System.out.println(cardtag);
-		System.out.println(cardtag.size());
+		JSONObject jsonObject = new JSONObject(cardtag);
+		JSONArray listTag = jsonObject.getJSONArray("tags");
+		List<String> tags = new ArrayList<String>();
+		if (listTag != null) { 
+			   int len = listTag.length();
+			   for (int i=0;i<len;i++){ 
+				   CardTag ct = new CardTag(card.getId(),listTag.get(i).toString());
+				   CardTagRepository.save(ct);
+			   } 
+			} 
+		
+
 		cardRepository.save(card);
 	}
 	
