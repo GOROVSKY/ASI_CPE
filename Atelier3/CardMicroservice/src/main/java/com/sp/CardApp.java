@@ -10,13 +10,13 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan
-public class CardMarketApp {
+public class CardApp {
 	
     @Autowired
     private Environment env;
 	
 	public static void main(String[] args) {
-		SpringApplication.run(CardMarketApp.class,args);
+		SpringApplication.run(CardApp.class,args);
 	}
 	
 
