@@ -33,7 +33,6 @@ public class CardService {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 	public void addCard(Card card) {
-		System.out.println(urlTag + card.getImageUrl());
 		String cardtag = this.restTemplate.getForObject(urlTag + card.getImageUrl(), String.class);
 		
 		JSONObject jsonObject = new JSONObject(cardtag);
