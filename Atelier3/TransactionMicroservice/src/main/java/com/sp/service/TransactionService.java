@@ -41,7 +41,6 @@ public class TransactionService {
 		
 		String urlM = getUrlUserCard.replace("{userId}", Integer.toString(transaction.getSellerId()));
 		urlM = urlM.replace("{cardId}", Integer.toString(transaction.getCardId()));
-		System.out.println(urlM);
 		UserCardDTO u = this.restTemplate.getForObject(urlM, UserCardDTO.class);
 		
 		if(u == null)
@@ -52,7 +51,6 @@ public class TransactionService {
 			//u = userCardList[0];
 			u.setQuantity(u.getQuantity()-1);
 			urlM = putUrlUserCard.replace("{userId}", Integer.toString(transaction.getSellerId()));
-			System.out.println(urlM);
 			this.restTemplate.put(urlM,u, UserCardDTO.class);
 			transactionRepository.save(transaction);
 		}
@@ -73,7 +71,6 @@ public class TransactionService {
 		
 		String urlM = getUrlUserCard.replace("{userId}", Integer.toString(t.getSellerId()));
 		urlM = urlM.replace("{cardId}", Integer.toString(t.getCardId()));
-		System.out.println(urlM);
 		UserCardDTO u = this.restTemplate.getForObject(urlM, UserCardDTO.class);
 		
 		urlM = putUrlUserCard.replace("{userId}", Integer.toString(t.getBuyerId()));
