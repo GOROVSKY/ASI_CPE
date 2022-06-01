@@ -16,9 +16,9 @@ public class CardTagId implements java.io.Serializable {
 	public CardTagId() {
 	}
 
-	public CardTagId(int tagId, int userId) {
+	public CardTagId(int tagId, int cardId) {
 		this.tagId = tagId;
-		this.cardId = userId;
+		this.cardId = cardId;
 	}
 
 	@Column(name = "card_id", nullable = false)
