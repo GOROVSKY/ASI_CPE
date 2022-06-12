@@ -40,7 +40,7 @@ public class UsersService {
 
 
 	private final RestTemplate restTemplate;
-	private String urlCards = "http://localhost:8083/cards";
+	private String urlCards = "http://localhost:80/api/cards";
 	private String urlAuth = "http://localhost:8084/hashpassword";
 	
 	public UsersService(RestTemplateBuilder restTemplateBuilder) {
@@ -155,10 +155,10 @@ public class UsersService {
 	public void addUserCard(UserCard userCard) {
 		UserCard u = userCardRepository.findByIdCardIdAndIdUserId(userCard.getId().getCardId(), userCard.getId().getUserId());
 		
-		if(u != null)
-		{
-	        throw new IllegalStateException();
-		}
+//		if(u != null)
+//		{
+//	        throw new IllegalStateException();
+//		}
 		
 		userCardRepository.save(userCard);
 	}

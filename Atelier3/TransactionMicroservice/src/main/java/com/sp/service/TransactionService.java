@@ -23,11 +23,11 @@ public class TransactionService {
 	@Autowired
 	TransactionRepository transactionRepository;
 	
-	private String getUrlUserCard ="http://localhost:80/users/{userId}/inventory/{cardId}";
-	private String putUrlUserCard ="http://localhost:80/users/{userId}/inventory";
-	private String urlUserId ="http://localhost:80/users/{userId}";
-	private String urlUser ="http://localhost:80/users";
-	private String urlCard ="http://localhost:80/cards/{cardId}";
+	private String getUrlUserCard ="http://localhost:80/api/users/{userId}/inventory/{cardId}";
+	private String putUrlUserCard ="http://localhost:80/api/users/{userId}/inventory";
+	private String urlUserId ="http://localhost:80/api/users/{userId}";
+	private String urlUser ="http://localhost:80/api/users";
+	private String urlCard ="http://localhost:80/api/cards/{cardId}";
 
 
 
@@ -93,7 +93,7 @@ public class TransactionService {
 		
 		urlM = urlUserId.replace("{userId}", Integer.toString(t.getSellerId()));
 		UsersDTO seller = this.restTemplate.getForObject(urlM, UsersDTO.class);
-		buyer.setWallet(buyer.getWallet()+card.getPrice().intValue());
+		seller.setWallet(buyer.getWallet()+card.getPrice().intValue());
 
 
 		this.restTemplate.put(urlUser, buyer, UsersDTO.class);
