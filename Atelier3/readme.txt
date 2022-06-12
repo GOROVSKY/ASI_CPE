@@ -4,6 +4,8 @@ Membres du groupe :
 - Guillaume Laville 
 - Vargiolu Thomas
 
+Lien projet GIT : https://github.com/GOROVSKY/ASI_CPE
+
 Elements réalisés par membre de groupe :
 - Thomas Vargiolu : Utilisation de tensorflow pour créer les tags des images. L'API est disponible via Flask et prend en parametre l'url puis retourne un json contenant les tags. 
 - Guillaume Laville : Création du micro-service UserMicroservice (gestion des utilisateurs et de leurs cartes). Mise en place de tests unitaires couvrant en partie le code du UserService.
